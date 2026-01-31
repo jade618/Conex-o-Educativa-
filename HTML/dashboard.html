@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Conexão Educativa</title>
+    <link rel="shortcut icon" href="../IMG/icone.svg" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../CSS/6ano.css">
+    <style>
+        /* Estilo para destacar Dashboard em amarelo */
+        .nav-link-dashboard {
+            background-color: #FFE33E !important;
+            color: #021373 !important;
+            font-weight: bold;
+            border-radius: 5px;
+            padding: 8px 15px !important;
+            margin: 5px 0;
+        }
+        .nav-link-dashboard:hover {
+            background-color: #ffd700 !important;
+            color: #021373 !important;
+        }
+        
+        /* Cards de estatísticas */
+        .stat-card {
+            background: linear-gradient(135deg, #021373 0%, #0023ae 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        .stat-card.yellow {
+            background: linear-gradient(135deg, #FFE33E 0%, #ffd700 100%);
+            color: #021373;
+        }
+        .stat-card.green {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+        .stat-card.red {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        }
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        /* Seções do dashboard */
+        .dashboard-section {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .section-title {
+            color: #021373;
+            border-bottom: 3px solid #FFE33E;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        
+        /* Tabelas de registros */
+        .record-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .record-table th {
+            background: #021373;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        .record-table td {
+            padding: 12px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .record-table tr:hover {
+            background: #f8f9fa;
+        }
+        .badge-action {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        .badge-adicionado {
+            background: #28a745;
+            color: white;
+        }
+        .badge-excluido {
+            background: #dc3545;
+            color: white;
+        }
+        .badge-falta {
+            background: #ffc107;
+            color: #021373;
+        }
+        
+        /* Formulários */
+        .form-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .form-section h5 {
+            color: #021373;
+            margin-bottom: 15px;
+        }
+        
+        /* Timeline de atividades */
+        .activity-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 15px;
+            border-left: 4px solid #021373;
+            background: #f8f9fa;
+            margin-bottom: 10px;
+            border-radius: 0 10px 10px 0;
+        }
+        .activity-item.add {
+            border-left-color: #28a745;
+        }
+        .activity-item.delete {
+            border-left-color: #dc3545;
+        }
+        .activity-item.absence {
+            border-left-color: #ffc107;
+        }
+        .activity-time {
+            font-size: 0.8rem;
+            color: #6c757d;
+            min-width: 100px;
+        }
+        .activity-content {
+            flex: 1;
+        }
+        .activity-title {
+            font-weight: bold;
+            color: #021373;
+        }
+        .activity-detail {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" defer></script>
+</head>
+
+<body>
+    <!-- Navbar harmoniosa e responsiva -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="home.html">
+                <img src="../IMG/Logo escola.svg" alt="Logo" class="logo-navbar">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../HTML/calendario.html">Calendário Escolar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../HTML/horarios.html">Horários</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../HTML/alunos6B.html">Turmas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-dashboard" href="../HTML/dashboard.html">Dashboard</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="page-title">Dashboard - Controle Escolar</h1>
+        
+        <!-- Estatísticas -->
+        <div class="row mb-4">
+            <div class="col-md-3 col-sm-6 mb-3">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalAlunosCounter">0</div>
+                    <div class="stat-label">Total de Alunos</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-3">
+                <div class="stat-card yellow">
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">Professores</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-3">
+                <div class="stat-card green">
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">Turmas Ativas</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-3">
+                <div class="stat-card red">
+                    <div class="stat-number" id="totalFaltasCounter">0</div>
+                    <div class="stat-label">Faltas este Mês</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <!-- Registro de Alunos -->
+            <div class="col-lg-8">
+                <div class="dashboard-section">
+                    <h4 class="section-title">📋 Registro de Alunos</h4>
+                    
+                    <!-- Formulário para adicionar registro -->
+                    <div class="form-section">
+                        <h5>➕ Registrar Nova Ação</h5>
+                        <form id="studentForm" onsubmit="addStudentRecord(event)">
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Ação</label>
+                                    <select class="form-select" id="studentAction" required>
+                                        <option value="adicionado">Adicionado</option>
+                                        <option value="excluido">Excluído</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Nome do Aluno</label>
+                                    <input type="text" class="form-control" id="studentName" placeholder="Nome completo" required>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Turma</label>
+                                    <select class="form-select" id="studentClass" required>
+                                        <option value="6º Ano - A">6º Ano - A</option>
+                                        <option value="6º Ano - B">6º Ano - B</option>
+                                        <option value="7º Ano - A">7º Ano - A</option>
+                                        <option value="7º Ano - B">7º Ano - B</option>
+                                        <option value="8º Ano - A">8º Ano - A</option>
+                                        <option value="8º Ano - B">8º Ano - B</option>
+                                        <option value="9º Ano - A">9º Ano - A</option>
+                                        <option value="9º Ano - B">9º Ano - B</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Motivo</label>
+                                <textarea class="form-control" id="studentReason" rows="2" placeholder="Motivo da ação" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Data</label>
+                                <input type="date" class="form-control" id="studentDate" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="background-color: #021373; border: none;">Salvar Registro</button>
+                        </form>
+                    </div>
+                    
+                    <!-- Tabela de registros -->
+                    <div class="table-responsive">
+                        <table class="record-table" id="studentsTable">
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Ação</th>
+                                    <th>Aluno</th>
+                                    <th>Turma</th>
+                                    <th>Motivo</th>
+                                </tr>
+                            </thead>
+                            <tbody id="studentsTableBody">
+                                <!-- Registros serão adicionados aqui -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Registro de Faltas de Professores -->
+            <div class="col-lg-4">
+                <div class="dashboard-section">
+                    <h4 class="section-title">👨‍🏫 Faltas de Professores</h4>
+                    
+                    <!-- Formulário de falta -->
+                    <div class="form-section">
+                        <h5>📝 Registrar Falta</h5>
+                        <form id="absenceForm" onsubmit="addAbsenceRecord(event)">
+                            <div class="mb-3">
+                                <label class="form-label">Professor</label>
+                                <select class="form-select" id="teacherName" required>
+                                    <option value="Prof. João Silva">Prof. João Silva (Matemática)</option>
+                                    <option value="Profª. Maria Santos">Profª. Maria Santos (Português)</option>
+                                    <option value="Prof. Carlos Oliveira">Prof. Carlos Oliveira (Ciências)</option>
+                                    <option value="Profª. Ana Costa">Profª. Ana Costa (História)</option>
+                                    <option value="Prof. Pedro Lima">Prof. Pedro Lima (Geografia)</option>
+                                    <option value="Prof. Ricardo Souza">Prof. Ricardo Souza (Ed. Física)</option>
+                                    <option value="Profª. Juliana Reis">Profª. Juliana Reis (Artes)</option>
+                                    <option value="Prof. Paulo Mendes">Prof. Paulo Mendes (Inglês)</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Data da Falta</label>
+                                <input type="date" class="form-control" id="absenceDate" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Motivo</label>
+                                <textarea class="form-control" id="absenceReason" rows="2" placeholder="Motivo da falta" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-warning w-100" style="background-color: #ffc107; border: none; color: #021373;">Registrar Falta</button>
+                        </form>
+                    </div>
+                    
+                    <!-- Resumo de faltas por professor -->
+                    <h5 class="mt-4 mb-3" style="color: #021373;">📊 Faltas por Professor (Mês)</h5>
+                    <div id="absenceSummary">
+                        <!-- Preenchido via JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Timeline de Atividades Recentes -->
+        <div class="dashboard-section">
+            <h4 class="section-title">🕐 Atividades Recentes</h4>
+            <div id="activityTimeline">
+                <!-- Preenchido via JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2024 Conexão Educativa. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        // Função para calcular total de alunos
+        function calcularTotalAlunos() {
+            let total = 0;
+            const turmas = ['6A', '6B', '7A', '7B', '8A', '8B', '9A', '9B'];
+            
+            turmas.forEach(turma => {
+                const dados = JSON.parse(localStorage.getItem(`nomes${turma}`));
+                if (dados && dados.nomet) {
+                    total += dados.nomet.length;
+                }
+            });
+            
+            return total;
+        }
+
+        // Dados de registros de alunos do localStorage
+        function getStudentRecords() {
+            return JSON.parse(localStorage.getItem('dashboard_registros')) || [
+                { date: '15/01/2024', action: 'adicionado', name: 'João Pedro', class: '7º Ano A', reason: 'Transferência de outra escola' },
+                { date: '14/01/2024', action: 'excluido', name: 'Maria Santos', class: '8º Ano B', reason: 'Mudança de cidade' },
+                { date: '10/01/2024', action: 'adicionado', name: 'Pedro Henrique', class: '6º Ano A', reason: 'Novo aluno' },
+                { date: '05/01/2024', action: 'adicionado', name: 'Ana Julia', class: '9º Ano A', reason: 'Retorno de transferência' },
+                { date: '03/01/2024', action: 'excluido', name: 'Lucas Miguel', class: '7º Ano B', reason: 'Motivos pessoais' },
+            ];
+        }
+
+        // Dados de faltas
+        function getAbsenceRecords() {
+            return JSON.parse(localStorage.getItem('dashboard_faltas')) || [
+                { date: '12/01/2024', teacher: 'Prof. Ricardo Souza', reason: 'Problemas de saúde' },
+                { date: '08/01/2024', teacher: 'Prof. João Silva', reason: 'Atendimento médico' },
+                { date: '05/01/2024', teacher: 'Profª. Maria Santos', reason: 'Emergência familiar' },
+            ];
+        }
+
+        // Renderizar tabela de alunos
+        function renderStudentTable() {
+            const tbody = document.getElementById('studentsTableBody');
+            const records = getStudentRecords();
+            tbody.innerHTML = '';
+            
+            records.forEach(record => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${record.date || record.data}</td>
+                    <td><span class="badge-action badge-${record.action || record.acao}">${record.action === 'adicionado' || record.acao === 'adicionado' ? 'Adicionado' : 'Excluído'}</span></td>
+                    <td>${record.name || record.nome}</td>
+                    <td>${record.class || record.turma}</td>
+                    <td>${record.reason || record.motivo}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Renderizar timeline
+        function renderTimeline() {
+            const timeline = document.getElementById('activityTimeline');
+            const records = getStudentRecords();
+            const absences = getAbsenceRecords();
+            
+            timeline.innerHTML = '';
+            
+            // Combinar registros
+            const allActivities = [
+                ...records.map(r => ({ ...r, type: r.action || r.acao })),
+                ...absences.map(a => ({ ...a, type: 'absence', name: a.teacher, reason: a.reason }))
+            ];
+            
+            // Ordenar por data (mais recente primeiro)
+            allActivities.sort((a, b) => {
+                const dateA = new Date(a.date.split('/').reverse().join('-'));
+                const dateB = new Date(b.date.split('/').reverse().join('-'));
+                return dateB - dateA;
+            });
+            
+            allActivities.forEach(activity => {
+                const item = document.createElement('div');
+                let icon, title;
+                
+                if (activity.type === 'adicionado') {
+                    icon = '➕';
+                    title = 'Aluno Adicionado';
+                } else if (activity.type === 'excluido') {
+                    icon = '❌';
+                    title = 'Aluno Excluído';
+                } else {
+                    icon = '⚠️';
+                    title = 'Falta Registrada';
+                }
+                
+                item.className = `activity-item ${activity.type}`;
+                item.innerHTML = `
+                    <div class="activity-time">${activity.date || activity.data}</div>
+                    <div class="activity-content">
+                        <div class="activity-title">${icon} ${title}</div>
+                        <div class="activity-detail">${activity.name || activity.nome} - ${activity.class || activity.turma || ''} | ${activity.reason || activity.motivo}</div>
+                    </div>
+                `;
+                timeline.appendChild(item);
+            });
+        }
+
+        // Renderizar resumo de faltas
+        function renderAbsenceSummary() {
+            const container = document.getElementById('absenceSummary');
+            const absences = getAbsenceRecords();
+            const teachers = [
+                { name: 'Prof. João Silva', initials: 'JS' },
+                { name: 'Profª. Maria Santos', initials: 'MS' },
+                { name: 'Prof. Carlos Oliveira', initials: 'CO' },
+                { name: 'Profª. Ana Costa', initials: 'AC' },
+                { name: 'Prof. Pedro Lima', initials: 'PL' },
+                { name: 'Prof. Ricardo Souza', initials: 'RS' },
+                { name: 'Profª. Juliana Reis', initials: 'JR' },
+                { name: 'Prof. Paulo Mendes', initials: 'PM' }
+            ];
+            
+            container.innerHTML = '';
+            
+            teachers.forEach(teacher => {
+                const count = absences.filter(a => a.teacher === teacher.name).length;
+                const percentage = (count / 3) * 100;
+                let colorClass = count === 0 ? 'bg-success' : (count === 1 ? 'bg-warning' : 'bg-danger');
+                let textClass = count === 1 ? 'text-dark' : '';
+                
+                const item = document.createElement('div');
+                item.className = 'mb-2';
+                item.innerHTML = `
+                    <div class="d-flex justify-content-between">
+                        <span>${teacher.name}</span>
+                        <span class="badge ${colorClass} ${textClass}">${count} falta${count !== 1 ? 's' : ''}</span>
+                    </div>
+                    <div class="progress" style="height: 8px;">
+                        <div class="progress-bar ${colorClass}" style="width: ${percentage}%;"></div>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+            
+            // Atualizar contador de faltas
+            document.getElementById('totalFaltasCounter').textContent = absences.length;
+        }
+
+        // Adicionar novo registro de aluno
+        function addStudentRecord(event) {
+            event.preventDefault();
+            
+            const action = document.getElementById('studentAction').value;
+            const name = document.getElementById('studentName').value;
+            const className = document.getElementById('studentClass').value;
+            const reason = document.getElementById('studentReason').value;
+            const date = document.getElementById('studentDate').value;
+            
+            // Formatar data
+            const dateObj = new Date(date);
+            const formattedDate = dateObj.toLocaleDateString('pt-BR');
+            
+            // Adicionar ao localStorage
+            let records = getStudentRecords();
+            records.unshift({
+                date: formattedDate,
+                action: action,
+                name: name,
+                class: className,
+                reason: reason
+            });
+            localStorage.setItem('dashboard_registros', JSON.stringify(records));
+            
+            // Atualizar interface
+            renderStudentTable();
+            renderTimeline();
+            
+            // Limpar formulário
+            document.getElementById('studentForm').reset();
+            
+            alert('Registro salvo com sucesso!');
+        }
+
+        // Adicionar registro de falta
+        function addAbsenceRecord(event) {
+            event.preventDefault();
+            
+            const teacher = document.getElementById('teacherName').value;
+            const reason = document.getElementById('absenceReason').value;
+            const date = document.getElementById('absenceDate').value;
+            
+            // Formatar data
+            const dateObj = new Date(date);
+            const formattedDate = dateObj.toLocaleDateString('pt-BR');
+            
+            // Adicionar ao localStorage
+            let absences = getAbsenceRecords();
+            absences.unshift({
+                date: formattedDate,
+                teacher: teacher,
+                reason: reason
+            });
+            localStorage.setItem('dashboard_faltas', JSON.stringify(absences));
+            
+            // Atualizar interface
+            renderAbsenceSummary();
+            renderTimeline();
+            
+            // Limpar formulário
+            document.getElementById('absenceForm').reset();
+            
+            alert('Falta registrada com sucesso!');
+        }
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', function() {
+            // Atualizar contador de alunos
+            const totalAlunos = calcularTotalAlunos();
+            document.getElementById('totalAlunosCounter').textContent = totalAlunos;
+            
+            renderStudentTable();
+            renderAbsenceSummary();
+            renderTimeline();
+            
+            // Definir data atual no formulário
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('studentDate').value = today;
+            document.getElementById('absenceDate').value = today;
+        });
+    </script>
+</body>
+
+</html>

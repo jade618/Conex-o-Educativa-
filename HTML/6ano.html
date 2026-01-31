@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alunos 6A</title>
+    <link rel="shortcut icon" href="../IMG/icone.svg" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../CSS/6ano.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <a href="home.html">
+                <img src="../IMG/Logo escola.svg" alt="Logo" class="logo" width="50%">
+            </a>
+        </div>
+        <nav>
+            <ul class="menu">
+                <li><a href="../HTML/index.html">Início</a></li>
+                <li><a href="#section history">Sobre</a></li>
+                <li><a href="../HTML/entrar.html">Entrar</a></li>
+            </ul>
+        </nav>
+    </header>
+    <br><br>
+    <h1 class="text-center">Turmas</h1>
+    <section class="botoes">
+        <nav class="d-flex navbar navbar-expand-lg navbar-dark p-3 space-between">
+            <div class="navbar-expand" id="navbarNavAltMarkup">
+                <div class="container_nav column navbar-nav nav-pills">
+                    <div class="container_menor navbar-brand column navbar-nav nav-pills">
+                        <span id="series" class="item_nav indicador_turma navbar-brand justify-content-center nav-item nav-link active">6ª Série - A</span>
+                        <button id="add" class="item_nav add btn navbar-brand nav-item btn-success justify-content-center">Adicionar</button>
+                        <div class="item_nav turmas dropdown">
+                            <button class="btn btn-secondary navbar-brand dropdown-toggle justify-content-center" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Turmas
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#" style="display: none;">6ª Série - A</a>
+                                <a class="dropdown-item" href="#">6ª Série - B</a>
+                                <a class="dropdown-item" href="#">7ª Série - A</a>
+                                <a class="dropdown-item" href="#">7ª Série - B</a>
+                                <a class="dropdown-item" href="#">8ª Série - A</a>
+                                <a class="dropdown-item" href="#">8ª Série - B</a>
+                                <a class="dropdown-item" href="#">9ª Série - A</a>
+                                <a class="dropdown-item" href="#">9ª Série - B</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <br><br><br><br><br><br><br>
+    </section>
+    <form action="#" method="post" class="row g-3 needs-validation" id="form" novalidate style="display: none;">
+        <div class="form-row input-group flex-nowrap">
+            <span class="input-group-text" id="addon-wrapping">Nome</span>
+            <input type="text" id="txtNome" name="nome" placeholder="Nome" class="form-control form-control-sm rounded-end" required>
+        </div>
+        <div class="form-row input-group flex-nowrap">
+            <span class="input-group-text" id="addon-wrapping">N1</span>
+            <input type="number" id="txtnota1" name="nota1" placeholder="Insira a nota" class="form-control form-control-sm rounded-end" required>
+        </div>
+        <div class="form-row input-group flex-nowrap">
+            <span class="input-group-text" id="addon-wrapping">N2</span>
+            <input type="number" id="txtnota2" name="nota2" placeholder="Insira a nota" class="form-control form-control-sm rounded-end" required>
+        </div>
+        <div class="form-row input-group flex-nowrap">
+            <span class="input-group-text" id="addon-wrapping">N3</span>
+            <input type="number" id="txtnota3" name="nota3" placeholder="Insira a nota" class="form-control form-control-sm rounded-end" required>
+        </div>
+        <br>
+        <input type="submit" class="enviar btn btn-success" value="Salvar" id="btnsalvar">
+        <br>
+    </form>
+
+    <table class="table table-hover" id="tabela">
+        <thead>
+            <tr>
+                <th scope="col">N°</th>
+                <th scope="col">Perfil</th>
+                <th scope="col">Nome</th>
+                <th scope="col">N1</th>
+                <th scope="col">N2</th>
+                <th scope="col">N3</th>
+                <th scope="col">Media</th>
+                <th scope="col">Ações</th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider table-dark table-striped-columns">
+            <!-- Conteúdo da tabela -->
+        </tbody>
+    </table>
+    <script src="../JS/script1.js">
+    </script>
+</body>
+
+</html>

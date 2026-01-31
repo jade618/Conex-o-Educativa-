@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Área do Professor - Conexão Educativa</title>
+    <link rel="shortcut icon" href="../IMG/icone (1).svg" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../CSS/professor.css">
+</head>
+
+<body>
+    <!-- Navbar harmoniosa e responsiva -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="home.html">
+                <img src="../IMG/Logo escola.svg" alt="Logo" class="logo-navbar">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle nav-link-active" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-book"></i> Matérias
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#materiais"><i class="bi bi-plus-circle"></i> Inserir Materiais</a></li>
+                            <li><a class="dropdown-item" href="#ver-materiais"><i class="bi bi-eye"></i> Ver Materiais</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="chamada.html"><i class="bi bi-people"></i> Chamada</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="notas.html"><i class="bi bi-clipboard-check"></i> Notas</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Seção de Inserir Materiais -->
+        <section id="materiais" class="section-materiais">
+            <h2 class="section-title"><i class="bi bi-cloud-upload"></i> Inserir Novo Material</h2>
+            
+            <div class="card material-card">
+                <div class="card-body">
+                    <form id="materialForm" onsubmit="salvarMaterial(event)">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Matéria</label>
+                                <select class="form-select" id="materia" required>
+                                    <option value="">Selecione a matéria</option>
+                                    <option value="Matemática">Matemática</option>
+                                    <option value="Português">Português</option>
+                                    <option value="Ciências">Ciências</option>
+                                    <option value="História">História</option>
+                                    <option value="Geografia">Geografia</option>
+                                    <option value="Educação Física">Educação Física</option>
+                                    <option value="Artes">Artes</option>
+                                    <option value="Inglês">Inglês</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Turma</label>
+                                <select class="form-select" id="turma" required>
+                                    <option value="">Selecione a turma</option>
+                                    <option value="6º Ano A">6º Ano A</option>
+                                    <option value="6º Ano B">6º Ano B</option>
+                                    <option value="7º Ano A">7º Ano A</option>
+                                    <option value="7º Ano B">7º Ano B</option>
+                                    <option value="8º Ano A">8º Ano A</option>
+                                    <option value="8º Ano B">8º Ano B</option>
+                                    <option value="9º Ano A">9º Ano A</option>
+                                    <option value="9º Ano B">9º Ano B</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Título do Material</label>
+                            <input type="text" class="form-control" id="tituloMaterial" placeholder="Ex: Lista de Exercícios - Equações" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Descrição</label>
+                            <textarea class="form-control" id="descricaoMaterial" rows="3" placeholder="Descreva o conteúdo do material..."></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Link do Material (PDF, vídeo, etc.)</label>
+                            <input type="url" class="form-control" id="linkMaterial" placeholder="https://...">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Data de Publicação</label>
+                            <input type="date" class="form-control" id="dataMaterial" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100" style="background-color: #021373; border: none;">
+                            <i class="bi bi-save"></i> Salvar Material
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção de Ver Materiais -->
+        <section id="ver-materiais" class="section-materiais mt-5">
+            <h2 class="section-title"><i class="bi bi-collection"></i> Materiais Publicados</h2>
+            
+            <div class="row" id="listaMateriais">
+                <!-- Materiais serão inseridos aqui via JavaScript -->
+            </div>
+        </section>
+
+        <!-- Seção de Horários -->
+        <section id="horarios" class="section-horarios mt-5">
+            <h2 class="section-title"><i class="bi bi-calendar-week"></i> Meus Horários</h2>
+            
+            <div class="table-responsive">
+                <table class="table table-bordered horarios-table">
+                    <thead>
+                        <tr>
+                            <th>Horário</th>
+                            <th>Segunda</th>
+                            <th>Terça</th>
+                            <th>Quarta</th>
+                            <th>Quinta</th>
+                            <th>Sexta</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>7:00 - 7:50</td>
+                            <td class="aula">6° B</td>
+                            <td class="aula">6° A</td>
+                            <td class="planejamento">Planejamento</td>
+                            <td class="planejamento">Planejamento</td>
+                            <td class="planejamento">Planejamento</td>
+                        </tr>
+                        <tr>
+                            <td>8:00 - 8:50</td>
+                            <td class="aula">8° A</td>
+                            <td class="planejamento">Planejamento</td>
+                            <td class="aula">9° B</td>
+                            <td class="aula">7° A</td>
+                            <td class="planejamento">Planejamento</td>
+                        </tr>
+                        <tr>
+                            <td>9:20 - 10:10</td>
+                            <td class="intervalo" colspan="5">🕘 Recreio</td>
+                        </tr>
+                        <tr>
+                            <td>10:10 - 11:00</td>
+                            <td class="planejamento">Planejamento</td>
+                            <td class="aula">8° B</td>
+                            <td class="aula">9° A</td>
+                            <td class="planejamento">Planejamento</td>
+                            <td class="planejamento">Planejamento</td>
+                        </tr>
+                        <tr>
+                            <td>11:00 - 11:50</td>
+                            <td class="planejamento">Planejamento</td>
+                            <td class="aula">7° B</td>
+                            <td class="planejamento">Planejamento</td>
+                            <td class="aula">6° A</td>
+                            <td class="aula">6° B</td>
+                        </tr>
+                        <tr>
+                            <td>11:50 - 13:00</td>
+                            <td class="intervalo" colspan="5">🍽️ Almoço</td>
+                        </tr>
+                        <tr>
+                            <td>13:00 - 13:50</td>
+                            <td class="planejamento">Planejamento</td>
+                            <td class="planejamento">Planejamento</td>
+                            <td class="aula">8° B</td>
+                            <td class="aula">8° A</td>
+                            <td class="aula">7° A</td>
+                        </tr>
+                        <tr>
+                            <td>13:50 - 14:40</td>
+                            <td class="planejamento">Planejamento</td>
+                            <td class="aula">7° B</td>
+                            <td class="planejamento">Planejamento</td>
+                            <td class="aula">9° B</td>
+                            <td class="aula">9° A</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="legenda mt-3">
+                <span class="badge bg-success"><i class="bi bi-book"></i> Aula</span>
+                <span class="badge bg-warning text-dark"><i class="bi bi-pencil"></i> Planejamento</span>
+                <span class="badge bg-info text-dark"><i class="bi bi-cup-hot"></i> Intervalo</span>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2024 Conexão Educativa. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="../JS/professor.js"></script>
+</body>
+
+</html>

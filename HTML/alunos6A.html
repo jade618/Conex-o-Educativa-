@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alunos 6A - Conexão Educativa</title>
+    <link rel="shortcut icon" href="../IMG/icone.svg" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../CSS/6ano.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!-- Navbar harmoniosa e responsiva -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="home.html">
+                <img src="../IMG/Logo escola.svg" alt="Logo" class="logo-navbar">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../HTML/calendario.html">Calendário escolar </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../HTML/horarios.html">Horários</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="../HTML/alunos6A.html">Turmas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../HTML/dashboard.html">Dashboard</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="page-title">Turmas</h1>
+        
+        <section class="turmas-section">
+            <div class="turmas-container">
+                <span id="series" class="indicador_turma">6ª Série - A</span>
+                <button id="add" class="add btn" onclick="adicionar()">Adicionar</button>
+                <div class="turmas dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Turmas
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="alunos6A.html" style="display: none;">6ª Série - A</a>
+                        <a class="dropdown-item" href="alunos6B.html">6ª Série - B</a>
+                        <a class="dropdown-item" href="alunos7A.html">7ª Série - A</a>
+                        <a class="dropdown-item" href="alunos7B.html">7ª Série - B</a>
+                        <a class="dropdown-item" href="alunos8A.html">8ª Série - A</a>
+                        <a class="dropdown-item" href="alunos8B.html">8ª Série - B</a>
+                        <a class="dropdown-item" href="alunos9A.html">9ª Série - A</a>
+                        <a class="dropdown-item" href="alunos9B.html">9ª Série - B</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <form action="#" method="post" class="form-container needs-validation" id="form" novalidate style="display: none;">
+            <div class="mb-3">
+                <div class="input-group">
+                    <span class="input-group-text">Nome</span>
+                    <input type="text" id="txtNome" name="nome" placeholder="Nome do aluno" class="form-control" required>
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="input-group">
+                    <span class="input-group-text">N1</span>
+                    <input type="number" id="txtnota1" name="nota1" placeholder="Nota 1" class="form-control" step="0.1" min="0" max="10" required>
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="input-group">
+                    <span class="input-group-text">N2</span>
+                    <input type="number" id="txtnota2" name="nota2" placeholder="Nota 2" class="form-control" step="0.1" min="0" max="10" required>
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="input-group">
+                    <span class="input-group-text">N3</span>
+                    <input type="number" id="txtnota3" name="nota3" placeholder="Nota 3" class="form-control" step="0.1" min="0" max="10" required>
+                </div>
+            </div>
+            <input type="submit" class="enviar btn" value="Salvar" id="btnsalvar">
+        </form>
+
+        <div class="table-container">
+            <table class="table table-hover" id="tabela">
+                <thead>
+                    <tr>
+                        <th scope="col">N°</th>
+                        <th scope="col">Perfil</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">N1</th>
+                        <th scope="col">N2</th>
+                        <th scope="col">N3</th>
+                        <th scope="col">Média</th>
+                        <th scope="col">Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="tabelaCorpo">
+                    <!-- Conteúdo da tabela -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Conexão Educativa. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="../JS/script6A.js"></script>
+</body>
+
+</html>
+

@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notas - Conexão Educativa</title>
+    <link rel="shortcut icon" href="../IMG/icone.svg" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../CSS/notas.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" defer></script>
+</head>
+
+<body>
+    <!-- Navbar harmoniosa e responsiva -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="home.html">
+                <img src="../IMG/Logo escola.svg" alt="Logo" class="logo-navbar">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="professor.html"><i class="bi bi-book"></i> Matérias</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="chamada.html"><i class="bi bi-people"></i> Chamada</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-active" href="notas.html"><i class="bi bi-clipboard-check"></i> Notas</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title"><i class="bi bi-clipboard-data"></i> Lançamento de Notas</h1>
+            <p class="page-subtitle">Selecione a turma e matéria para lançar as notas dos alunos</p>
+        </div>
+
+        <!-- Seletor de Turma e Matéria -->
+        <div class="selector-card mb-4">
+            <div class="row g-3">
+                <div class="col-md-4 col-sm-6">
+                    <label class="form-label"><i class="bi bi-bookmark"></i> Matéria:</label>
+                    <select class="form-select" id="materia" onchange="carregarTabelaNotas()">
+                        <option value="">Selecione a matéria</option>
+                        <option value="Matemática">Matemática</option>
+                        <option value="Português">Português</option>
+                        <option value="Ciências">Ciências</option>
+                        <option value="História">História</option>
+                        <option value="Geografia">Geografia</option>
+                        <option value="Educação Física">Educação Física</option>
+                        <option value="Artes">Artes</option>
+                        <option value="Inglês">Inglês</option>
+                    </select>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <label class="form-label"><i class="bi bi-people"></i> Turma:</label>
+                    <select class="form-select" id="turma" onchange="carregarTabelaNotas()">
+                        <option value="">Selecione a turma</option>
+                        <option value="6A">6º Ano A</option>
+                        <option value="6B">6º Ano B</option>
+                        <option value="7A">7º Ano A</option>
+                        <option value="7B">7º Ano B</option>
+                        <option value="8A">8º Ano A</option>
+                        <option value="8B">8º Ano B</option>
+                        <option value="9A">9º Ano A</option>
+                        <option value="9B">9º Ano B</option>
+                    </select>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <label class="form-label"><i class="bi bi-calendar"></i> Bimestre:</label>
+                    <select class="form-select" id="bimestre" onchange="carregarTabelaNotas()">
+                        <option value="1">1º Bimestre</option>
+                        <option value="2">2º Bimestre</option>
+                        <option value="3">3º Bimestre</option>
+                        <option value="4">4º Bimestre</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabela de Notas -->
+        <div class="card">
+            <div class="card-header bg-primary text-white d-flex align-items-center">
+                <i class="bi bi-table me-2"></i>
+                <span id="tituloTabela">Notas dos Alunos</span>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover notas-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 60px;">#</th>
+                                <th>Aluno</th>
+                                <th style="width: 120px;">Nota 1</th>
+                                <th style="width: 120px;">Nota 2</th>
+                                <th style="width: 120px;">Nota 3</th>
+                                <th style="width: 100px;">Média</th>
+                                <th style="width: 130px;">Situação</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabelaNotas">
+                            <tr>
+                                <td colspan="7" class="text-center py-5">
+                                    <i class="bi bi-info-circle" style="font-size: 3rem; color: #adb5bd;"></i>
+                                    <p class="mt-3 text-muted">Selecione a matéria e a turma para visualizar os alunos</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="d-flex flex-wrap gap-2 mt-3">
+                    <button class="btn btn-success" onclick="salvarNotas()">
+                        <i class="bi bi-save"></i> Salvar Notas
+                    </button>
+                    <button class="btn btn-outline-secondary" onclick="calcularMedia()">
+                        <i class="bi bi-calculator"></i> Calcular Médias
+                    </button>
+                    <button class="btn btn-outline-warning" onclick="limparNotas()">
+                        <i class="bi bi-trash"></i> Limpar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Estatísticas da Turma -->
+        <div class="card mt-4">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0"><i class="bi bi-bar-chart"></i> Estatísticas da Turma</h5>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-3 col-sm-6">
+                        <div class="stat-card">
+                            <div class="stat-number" id="totalAlunos">0</div>
+                            <div class="stat-label">Total de Alunos</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="stat-card green">
+                            <div class="stat-number" id="aprovados">0</div>
+                            <div class="stat-label">Aprovados</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="stat-card yellow">
+                            <div class="stat-number" id="recuperacao">0</div>
+                            <div class="stat-label">Recuperação</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="stat-card red">
+                            <div class="stat-number" id="reprovados">0</div>
+                            <div class="stat-label">Reprovados</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Legenda -->
+        <div class="legenda mt-4">
+            <h6><i class="bi bi-info-circle"></i> Legenda de Cores:</h6>
+            <div class="d-flex flex-wrap gap-2 mt-2">
+                <span class="badge bg-success"><i class="bi bi-check-circle"></i> Média ≥ 7 (Aprovado)</span>
+                <span class="badge bg-warning text-dark"><i class="bi bi-exclamation-circle"></i> 5 ≤ Média < 7 (Recuperação)</span>
+                <span class="badge bg-danger"><i class="bi bi-x-circle"></i> Média < 5 (Reprovado)</span>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2024 Conexão Educativa. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        // Carregar alunos de uma turma do localStorage
+        function carregarAlunos(turma) {
+            try {
+                const dados = JSON.parse(localStorage.getItem('nomes' + turma));
+                if (dados && dados.nomet && Array.isArray(dados.nomet)) {
+                    return dados.nomet;
+                }
+                return [];
+            } catch (e) {
+                console.error('Erro ao carregar alunos:', e);
+                return [];
+            }
+        }
+
+        // Renderizar tabela de notas
+        function carregarTabelaNotas() {
+            const materia = document.getElementById('materia').value;
+            const turma = document.getElementById('turma').value;
+            const bimestre = document.getElementById('bimestre').value;
+            const tbody = document.getElementById('tabelaNotas');
+            
+            // Atualizar título
+            document.getElementById('tituloTabela').textContent = materia && turma 
+                ? materia + ' - ' + turma + ' (' + bimestre + 'º Bimestre)'
+                : 'Notas dos Alunos';
+            
+            if (!materia || !turma) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="text-center py-5">
+                            <i class="bi bi-info-circle" style="font-size: 3rem; color: #adb5bd;"></i>
+                            <p class="mt-3 text-muted">Selecione a matéria e a turma para visualizar os alunos</p>
+                        </td>
+                    </tr>`;
+                atualizarEstatisticas({}, 0);
+                return;
+            }
+            
+            const alunos = carregarAlunos(turma);
+            console.log('Alunos carregados para ' + turma + ':', alunos.length);
+            
+            // Carregar notas salvas
+            const notasSalvas = JSON.parse(localStorage.getItem('notas_' + materia + '_' + turma + '_' + bimestre)) || {};
+            
+            tbody.innerHTML = '';
+            
+            if (alunos.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="text-center py-5">
+                            <i class="bi bi-people" style="font-size: 3rem; color: #adb5bd;"></i>
+                            <p class="mt-3 text-muted">Nenhum aluno nesta turma. Verifique se há alunos cadastrados no sistema.</p>
+                            <small class="text-muted">Dica: Adicione alunos através das páginas de turma (alunos6A.html, etc.)</small>
+                        </td>
+                    </tr>`;
+                atualizarEstatisticas({}, 0);
+                return;
+            }
+            
+            for (let index = 0; index < alunos.length; index++) {
+                const aluno = alunos[index];
+                const notas = notasSalvas[index] || { nota1: '', nota2: '', nota3: '' };
+                const media = calcularMediaAluno(notas.nota1, notas.nota2, notas.nota3);
+                const situacao = getSituacao(media);
+                
+                const tr = document.createElement('tr');
+                tr.className = situacao.classe;
+                tr.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <object data="../IMG/img/icone_perfil.svg" type="image/svg+xml" width="30" height="30" class="me-2 flex-shrink-0"></object>
+                            <span class="text-truncate">${aluno}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="number" class="form-control nota-input" 
+                            id="nota1_${index}" value="${notas.nota1}" 
+                            min="0" max="10" step="0.1" placeholder="0-10"
+                            onchange="atualizarMedia(${index})">
+                    </td>
+                    <td>
+                        <input type="number" class="form-control nota-input" 
+                            id="nota2_${index}" value="${notas.nota2}" 
+                            min="0" max="10" step="0.1" placeholder="0-10"
+                            onchange="atualizarMedia(${index})">
+                    </td>
+                    <td>
+                        <input type="number" class="form-control nota-input" 
+                            id="nota3_${index}" value="${notas.nota3}" 
+                            min="0" max="10" step="0.1" placeholder="0-10"
+                            onchange="atualizarMedia(${index})">
+                    </td>
+                    <td class="text-center">
+                        <strong id="media_${index}">${media > 0 ? media.toFixed(2).replace('.', ',') : '-'}</strong>
+                    </td>
+                    <td class="text-center">
+                        <span class="badge ${situacao.badge}" id="situacao_${index}">${situacao.texto}</span>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            }
+            
+            atualizarEstatisticas(notasSalvas, alunos.length);
+        }
+
+        // Calcular média de um aluno
+        function calcularMediaAluno(nota1, nota2, nota3) {
+            const n1 = parseFloat(nota1) || 0;
+            const n2 = parseFloat(nota2) || 0;
+            const n3 = parseFloat(nota3) || 0;
+            
+            if (nota1 === '' && nota2 === '' && nota3 === '') return 0;
+            return (n1 + n2 + n3) / 3;
+        }
+
+        // Obter situação do aluno
+        function getSituacao(media) {
+            if (media === 0) return { classe: '', badge: 'bg-secondary', texto: '-' };
+            if (media >= 7) return { classe: 'aprovado', badge: 'bg-success', texto: 'Aprovado' };
+            if (media >= 5) return { classe: 'recuperacao', badge: 'bg-warning text-dark', texto: 'Recuperação' };
+            return { classe: 'reprovado', badge: 'bg-danger', texto: 'Reprovado' };
+        }
+
+        // Atualizar média ao mudar nota
+        function atualizarMedia(index) {
+            const nota1 = document.getElementById('nota1_' + index).value;
+            const nota2 = document.getElementById('nota2_' + index).value;
+            const nota3 = document.getElementById('nota3_' + index).value;
+            
+            const media = calcularMediaAluno(nota1, nota2, nota3);
+            const situacao = getSituacao(media);
+            
+            document.getElementById('media_' + index).textContent = media > 0 ? media.toFixed(2).replace('.', ',') : '-';
+            const situacaoEl = document.getElementById('situacao_' + index);
+            situacaoEl.textContent = situacao.texto;
+            situacaoEl.className = 'badge ' + situacao.badge;
+            
+            // Atualizar cor da linha
+            const row = document.getElementById('media_' + index).closest('tr');
+            row.className = situacao.classe;
+            
+            atualizarEstatisticas({}, 0, true);
+        }
+
+        // Calcular todas as médias
+        function calcularMedia() {
+            const turma = document.getElementById('turma').value;
+            if (!turma) {
+                alert('Selecione uma turma!');
+                return;
+            }
+            
+            const alunos = carregarAlunos(turma);
+            for (let i = 0; i < alunos.length; i++) {
+                atualizarMedia(i);
+            }
+            alert('Médias calculadas!');
+        }
+
+        // Atualizar estatísticas
+        function atualizarEstatisticas(notasSalvas, totalAlunos, apenasCalcular = false) {
+            const materia = document.getElementById('materia').value;
+            const turma = document.getElementById('turma').value;
+            
+            if (!materia || !turma) {
+                document.getElementById('totalAlunos').textContent = '0';
+                document.getElementById('aprovados').textContent = '0';
+                document.getElementById('recuperacao').textContent = '0';
+                document.getElementById('reprovados').textContent = '0';
+                return;
+            }
+            
+            if (!apenasCalcular) {
+                const bimestre = document.getElementById('bimestre').value;
+                const notasDoBanco = JSON.parse(localStorage.getItem('notas_' + materia + '_' + turma + '_' + bimestre)) || {};
+                Object.assign(notasSalvas, notasDoBanco);
+            }
+            
+            let aprovados = 0, recuperacao = 0, reprovados = 0;
+            
+            Object.values(notasSalvas).forEach(notas => {
+                const media = calcularMediaAluno(notas.nota1, notas.nota2, notas.nota3);
+                if (media > 0) {
+                    if (media >= 7) aprovados++;
+                    else if (media >= 5) recuperacao++;
+                    else reprovados++;
+                }
+            });
+            
+            const alunos = materia && turma ? carregarAlunos(turma) : [];
+            document.getElementById('totalAlunos').textContent = alunos.length;
+            document.getElementById('aprovados').textContent = aprovados;
+            document.getElementById('recuperacao').textContent = recuperacao;
+            document.getElementById('reprovados').textContent = reprovados;
+        }
+
+        // Salvar notas
+        function salvarNotas() {
+            const materia = document.getElementById('materia').value;
+            const turma = document.getElementById('turma').value;
+            const bimestre = document.getElementById('bimestre').value;
+            
+            if (!materia || !turma) {
+                alert('Selecione a matéria e a turma!');
+                return;
+            }
+            
+            const alunos = carregarAlunos(turma);
+            const notas = {};
+            
+            for (let i = 0; i < alunos.length; i++) {
+                notas[i] = {
+                    nota1: document.getElementById('nota1_' + i).value,
+                    nota2: document.getElementById('nota2_' + i).value,
+                    nota3: document.getElementById('nota3_' + i).value
+                };
+            }
+            
+            localStorage.setItem('notas_' + materia + '_' + turma + '_' + bimestre, JSON.stringify(notas));
+            alert('Notas de ' + materia + ' - ' + turma + ' (' + bimestre + 'º Bimestre) salvas com sucesso!');
+        }
+
+        // Limpar notas
+        function limparNotas() {
+            if (confirm('Tem certeza que deseja limpar todas as notas desta turma?')) {
+                const materia = document.getElementById('materia').value;
+                const turma = document.getElementById('turma').value;
+                const bimestre = document.getElementById('bimestre').value;
+                
+                if (materia && turma) {
+                    localStorage.removeItem('notas_' + materia + '_' + turma + '_' + bimestre);
+                    carregarTabelaNotas();
+                    alert('Notas limpas com sucesso!');
+                }
+            }
+        }
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Página de notas inicializada');
+        });
+    </script>
+</body>
+
+</html>

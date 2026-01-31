@@ -1,0 +1,56 @@
+*{
+    margin: 0;
+    padding: 0;
+   }
+   body{
+    background-image: url(../IMG/WhatsApp\ Image\ 2024-06-23\ at\ 21.06.54.jpeg);
+    background-repeat: no-repeat;
+   }
+   .container{
+    width: auto;
+    border-radius: 10px;
+    height: 110vh;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 2px solid rgba(255, 255, 255, 0.199);
+    
+   }
+   .mb-4, .my-4 {
+    margin-bottom: 1.5rem !important;
+   }
+img {
+    vertical-align: middle;
+    border-style: none;
+   }
+   /* Estilo para imagens de login - todas com o mesmo tamanho */
+   .form-signin img {
+    width: 200px;
+    height: auto;
+    max-width: 100%;
+    margin-bottom: 20px;
+   }
+   *, ::after, ::before {
+    box-sizing: border-box;
+   }
+   div{
+    position: relative;
+   }
+   div i{
+    font-size: 25px;
+    cursor: pointer;
+    position: absolute;
+    right: 5%;
+    color: #ffffff98;
+    margin-top: -8vh;
+   }
+   .form-group input{
+    outline: none;
+    background-color: transparent;
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.199);
+    margin-bottom: 2vh;
+    
+   }
+   body h1, h2, p{
+    color: white
+   }

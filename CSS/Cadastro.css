@@ -1,0 +1,36 @@
+body {
+    background-color: #2E5076;
+    color: #ffffff;
+  }
+
+.container{
+    width: 50vw;
+}
+
+.logo {
+    width: 200px;
+    height: auto;
+    margin-bottom: 20px;
+  }
+
+.mb-4, .my-4 {
+    margin-bottom: 1.5rem !important;
+}
+img {
+    vertical-align: middle;
+    border-style: none;
+}
+*, ::after, ::before {
+    box-sizing: border-box;
+}
+div{
+    position: relative;
+}
+div i{
+    font-size: 25px;
+    cursor: pointer;
+    position: absolute;
+    right: 5%;
+    color: rgb(189, 189, 189);
+    margin-top: -6vh;
+}
