@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Área do Aluno - Conexão Educativa</title>
+    <link rel="shortcut icon" href="../IMG/icone (1).svg" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../CSS/perfilaluno.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" defer></script>
+</head>
+
+<body>
+    <!-- Navbar do Aluno -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+                <img src="../IMG/Logo escola.svg" alt="Logo" class="logo-navbar">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#materiais"><i class="bi bi-book"></i> Materiais</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#horarios"><i class="bi bi-calendar-week"></i> Horários</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#notas"><i class="bi bi-clipboard-check"></i> Minhas Notas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html"><i class="bi bi-box-arrow-right"></i> Sair</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Perfil do Aluno -->
+        <div class="perfil-card mb-4">
+            <div class="row align-items-center">
+                <div class="col-md-2 col-sm-3 text-center">
+                    <div class="perfil-foto">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                </div>
+                <div class="col-md-10 col-sm-9">
+                    <h2 class="perfil-nome" id="nomeAluno">Nome do Aluno</h2>
+                    <div class="perfil-info">
+                        <span class="badge bg-primary me-2" id="turmaAluno"><i class="bi bi-people"></i> 6º Ano A</span>
+                        <span class="badge bg-success" id="statusAluno"><i class="bi bi-check-circle"></i> Ativo</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção de Materiais -->
+        <section id="materiais" class="section-materiais">
+            <h2 class="section-title"><i class="bi bi-book"></i> Meus Materiais</h2>
+            
+            <div class="selector-card mb-4">
+                <div class="row g-3">
+                    <div class="col-md-4 col-sm-6">
+                        <label class="form-label"><i class="bi bi-bookmark"></i> Matéria:</label>
+                        <select class="form-select" id="materiaFiltro" onchange="filtrarMateriais()">
+                            <option value="">Todas as matérias</option>
+                            <option value="Matemática">Matemática</option>
+                            <option value="Português">Português</option>
+                            <option value="Ciências">Ciências</option>
+                            <option value="História">História</option>
+                            <option value="Geografia">Geografia</option>
+                            <option value="Educação Física">Educação Física</option>
+                            <option value="Artes">Artes</option>
+                            <option value="Inglês">Inglês</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <label class="form-label"><i class="bi bi-people"></i> Turma:</label>
+                        <select class="form-select" id="turmaFiltro" onchange="filtrarMateriais()">
+                            <option value="6A">6º Ano A</option>
+                            <option value="6B">6º Ano B</option>
+                            <option value="7A">7º Ano A</option>
+                            <option value="7B">7º Ano B</option>
+                            <option value="8A">8º Ano A</option>
+                            <option value="8B">8º Ano B</option>
+                            <option value="9A">9º Ano A</option>
+                            <option value="9B">9º Ano B</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" id="listaMateriais">
+                <!-- Materiais serão carregados aqui -->
+                <div class="col-12 text-center py-5">
+                    <i class="bi bi-inbox" style="font-size: 3rem; color: #adb5bd;"></i>
+                    <p class="mt-3 text-muted">Nenhum material disponível</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção de Horários -->
+        <section id="horarios" class="section-horarios mt-5">
+            <h2 class="section-title"><i class="bi bi-calendar-week"></i> Meus Horários</h2>
+            
+            <div class="selector-card mb-4">
+                <label class="form-label"><i class="bi bi-people"></i> Selecione sua turma para ver o horário:</label>
+                <select class="form-select" id="turmaHorario" style="max-width: 300px;" onchange="exibirHorario()">
+                    <option value="6A">6º Ano A</option>
+                    <option value="6B">6º Ano B</option>
+                    <option value="7A">7º Ano A</option>
+                    <option value="7B">7º Ano B</option>
+                    <option value="8A">8º Ano A</option>
+                    <option value="8B">8º Ano B</option>
+                    <option value="9A">9º Ano A</option>
+                    <option value="9B">9º Ano B</option>
+                </select>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-bordered horarios-table">
+                    <thead>
+                        <tr>
+                            <th>Horário</th>
+                            <th>Segunda</th>
+                            <th>Terça</th>
+                            <th>Quarta</th>
+                            <th>Quinta</th>
+                            <th>Sexta</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelaHorarios">
+                        <!-- Preenchido via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="legenda mt-3">
+                <span class="badge bg-primary"><i class="bi bi-book"></i> Aula</span>
+                <span class="badge bg-warning text-dark"><i class="bi bi-cup-hot"></i> Intervalo</span>
+                <span class="badge bg-success"><i class="bi bi-sun"></i> Almoço</span>
+            </div>
+        </section>
+
+        <!-- Seção de Notas -->
+        <section id="notas" class="section-notas mt-5">
+            <h2 class="section-title"><i class="bi bi-clipboard-check"></i> Minhas Notas</h2>
+            
+            <div class="selector-card mb-4">
+                <div class="row g-3">
+                    <div class="col-md-4 col-sm-6">
+                        <label class="form-label"><i class="bi bi-bookmark"></i> Matéria:</label>
+                        <select class="form-select" id="materiaNotas" onchange="exibirNotas()">
+                            <option value="">Selecione a matéria</option>
+                            <option value="Matemática">Matemática</option>
+                            <option value="Português">Português</option>
+                            <option value="Ciências">Ciências</option>
+                            <option value="História">História</option>
+                            <option value="Geografia">Geografia</option>
+                            <option value="Educação Física">Educação Física</option>
+                            <option value="Artes">Artes</option>
+                            <option value="Inglês">Inglês</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <label class="form-label"><i class="bi bi-calendar"></i> Bimestre:</label>
+                        <select class="form-select" id="bimestreNotas" onchange="exibirNotas()">
+                            <option value="1">1º Bimestre</option>
+                            <option value="2">2º Bimestre</option>
+                            <option value="3">3º Bimestre</option>
+                            <option value="4">4º Bimestre</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="bi bi-table"></i> <span id="tituloNotas">Notas por Bimestre</span></h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Matéria</th>
+                                    <th class="text-center">Nota 1</th>
+                                    <th class="text-center">Nota 2</th>
+                                    <th class="text-center">Nota 3</th>
+                                    <th class="text-center">Média</th>
+                                    <th class="text-center">Situação</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabelaNotas">
+                                <tr>
+                                    <td colspan="6" class="text-center py-4">
+                                        <i class="bi bi-info-circle" style="font-size: 2rem; color: #adb5bd;"></i>
+                                        <p class="mt-2 text-muted">Selecione uma matéria para ver suas notas</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2024 Conexão Educativa. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+// Dados do aluno logado
+        let dadosAluno = {
+            nome: 'João Silva',
+            turma: '6A'
+        };
+
+        // Mapeamento de turmas para busca
+        const mapeamentoTurmas = {
+            '6A': ['6º Ano A', '6A'],
+            '6B': ['6º Ano B', '6B'],
+            '7A': ['7º Ano A', '7A'],
+            '7B': ['7º Ano B', '7B'],
+            '8A': ['8º Ano A', '8A'],
+            '8B': ['8º Ano B', '8B'],
+            '9A': ['9º Ano A', '9A'],
+            '9B': ['9º Ano B', '9B']
+        };
+
+        // Horários por turma
+        const horariosTurmas = {
+            '6A': [
+                { horario: '7:00 - 7:50', seg: 'Matemática', ter: 'Português', qua: 'Ciências', qui: 'História', sex: 'Geografia' },
+                { horario: '8:00 - 8:50', seg: 'Português', ter: 'Matemática', qua: 'História', qui: 'Ciências', sex: 'Artes' },
+                { horario: '9:20 - 10:10', seg: '🕘 Intervalo', ter: '🕘 Intervalo', qua: '🕘 Intervalo', qui: '🕘 Intervalo', sex: '🕘 Intervalo' },
+                { horario: '10:10 - 11:00', seg: 'Ciências', ter: 'História', qua: 'Matemática', qui: 'Português', sex: 'Inglês' },
+                { horario: '11:00 - 11:50', seg: 'Geografia', ter: 'Artes', qua: 'Português', qui: 'Matemática', sex: 'Educação Física' },
+                { horario: '11:50 - 13:00', seg: '🍽️ Almoço', ter: '🍽️ Almoço', qua: '🍽️ Almoço', qui: '🍽️ Almoço', sex: '🍽️ Almoço' },
+                { horario: '13:00 - 13:50', seg: 'Educação Física', ter: 'Ciências', qua: 'Artes', qui: 'Geografia', sex: 'História' },
+                { horario: '13:50 - 14:40', seg: 'Inglês', ter: 'Geografia', qua: 'Educação Física', qui: 'Artes', sex: 'Matemática' }
+            ],
+            '6B': [
+                { horario: '7:00 - 7:50', seg: 'Português', ter: 'Matemática', qua: 'História', qui: 'Ciências', sex: 'Geografia' },
+                { horario: '8:00 - 8:50', seg: 'Matemática', ter: 'Português', qua: 'Ciências', qui: 'História', sex: 'Artes' },
+                { horario: '9:20 - 10:10', seg: '🕘 Intervalo', ter: '🕘 Intervalo', qua: '🕘 Intervalo', qui: '🕘 Intervalo', sex: '🕘 Intervalo' },
+                { horario: '10:10 - 11:00', seg: 'História', ter: 'Ciências', qua: 'Português', qui: 'Matemática', sex: 'Inglês' },
+                { horario: '11:00 - 11:50', seg: 'Artes', ter: 'Geografia', qua: 'Matemática', qui: 'Português', sex: 'Educação Física' },
+                { horario: '11:50 - 13:00', seg: '🍽️ Almoço', ter: '🍽️ Almoço', qua: '🍽️ Almoço', qui: '🍽️ Almoço', sex: '🍽️ Almoço' },
+                { horario: '13:00 - 13:50', seg: 'Geografia', ter: 'Artes', qua: 'Educação Física', qui: 'Ciências', sex: 'História' },
+                { horario: '13:50 - 14:40', seg: 'Educação Física', ter: 'Inglês', qua: 'Geografia', qui: 'Matemática', sex: 'Ciências' }
+            ],
+            '7A': [
+                { horario: '7:00 - 7:50', seg: 'Ciências', ter: 'Matemática', qua: 'Português', qui: 'História', sex: 'Geografia' },
+                { horario: '8:00 - 8:50', seg: 'Matemática', ter: 'Ciências', qua: 'História', qui: 'Português', sex: 'Artes' },
+                { horario: '9:20 - 10:10', seg: '🕘 Intervalo', ter: '🕘 Intervalo', qua: '🕘 Intervalo', qui: '🕘 Intervalo', sex: '🕘 Intervalo' },
+                { horario: '10:10 - 11:00', seg: 'Português', ter: 'História', qua: 'Matemática', qui: 'Ciências', sex: 'Inglês' },
+                { horario: '11:00 - 11:50', seg: 'Geografia', ter: 'Artes', qua: 'Ciências', qui: 'Matemática', sex: 'Educação Física' },
+                { horario: '11:50 - 13:00', seg: '🍽️ Almoço', ter: '🍽️ Almoço', qua: '🍽️ Almoço', qui: '🍽️ Almoço', sex: '🍽️ Almoço' },
+                { horario: '13:00 - 13:50', seg: 'Educação Física', ter: 'Geografia', qua: 'Artes', qui: 'História', sex: 'Português' },
+                { horario: '13:50 - 14:40', seg: 'Inglês', ter: 'Português', qua: 'Educação Física', qui: 'Geografia', sex: 'História' }
+            ],
+            '7B': [
+                { horario: '7:00 - 7:50', seg: 'História', ter: 'Ciências', qua: 'Matemática', qui: 'Português', sex: 'Geografia' },
+                { horario: '8:00 - 8:50', seg: 'Ciências', ter: 'História', qua: 'Português', qui: 'Matemática', sex: 'Artes' },
+                { horario: '9:20 - 10:10', seg: '🕘 Intervalo', ter: '🕘 Intervalo', qua: '🕘 Intervalo', qui: '🕘 Intervalo', sex: '🕘 Intervalo' },
+                { horario: '10:10 - 11:00', seg: 'Matemática', ter: 'Português', qua: 'Ciências', qui: 'História', sex: 'Inglês' },
+                { horario: '11:00 - 11:50', seg: 'Artes', ter: 'Geografia', qua: 'História', qui: 'Matemática', sex: 'Educação Física' },
+                { horario: '11:50 - 13:00', seg: '🍽️ Almoço', ter: '🍽️ Almoço', qua: '🍽️ Almoço', qui: '🍽️ Almoço', sex: '🍽️ Almoço' },
+                { horario: '13:00 - 13:50', seg: 'Geografia', ter: 'Artes', qua: 'Educação Física', qui: 'Português', sex: 'Ciências' },
+                { horario: '13:50 - 14:40', seg: 'Educação Física', ter: 'Inglês', qua: 'Geografia', qui: 'Artes', sex: 'Português' }
+            ],
+            '8A': [
+                { horario: '7:00 - 7:50', seg: 'Matemática', ter: 'Ciências', qua: 'Português', qui: 'História', sex: 'Geografia' },
+                { horario: '8:00 - 8:50', seg: 'Ciências', ter: 'Matemática', qua: 'História', qui: 'Português', sex: 'Artes' },
+                { horario: '9:20 - 10:10', seg: '🕘 Intervalo', ter: '🕘 Intervalo', qua: '🕘 Intervalo', qui: '🕘 Intervalo', sex: '🕘 Intervalo' },
+                { horario: '10:10 - 11:00', seg: 'Português', ter: 'História', qua: 'Matemática', qui: 'Ciências', sex: 'Inglês' },
+                { horario: '11:00 - 11:50', seg: 'Geografia', ter: 'Artes', qua: 'Ciências', qui: 'Matemática', sex: 'Educação Física' },
+                { horario: '11:50 - 13:00', seg: '🍽️ Almoço', ter: '🍽️ Almoço', qua: '🍽️ Almoço', qui: '🍽️ Almoço', sex: '🍽️ Almoço' },
+                { horario: '13:00 - 13:50', seg: 'Educação Física', ter: 'Geografia', qua: 'Artes', qui: 'História', sex: 'Português' },
+                { horario: '13:50 - 14:40', seg: 'Inglês', ter: 'Português', qua: 'Educação Física', qui: 'Geografia', sex: 'História' }
+            ],
+            '8B': [
+                { horario: '7:00 - 7:50', seg: 'Português', ter: 'Matemática', qua: 'Ciências', qui: 'História', sex: 'Geografia' },
+                { horario: '8:00 - 8:50', seg: 'Matemática', ter: 'Português', qua: 'História', qui: 'Ciências', sex: 'Artes' },
+                { horario: '9:20 - 10:10', seg: '🕘 Intervalo', ter: '🕘 Intervalo', qua: '🕘 Intervalo', qui: '🕘 Intervalo', sex: '🕘 Intervalo' },
+                { horario: '10:10 - 11:00', seg: 'Ciências', ter: 'História', qua: 'Matemática', qui: 'Português', sex: 'Inglês' },
+                { horario: '11:00 - 11:50', seg: 'Artes', ter: 'Geografia', qua: 'Português', qui: 'Matemática', sex: 'Educação Física' },
+                { horario: '11:50 - 13:00', seg: '🍽️ Almoço', ter: '🍽️ Almoço', qua: '🍽️ Almoço', qui: '🍽️ Almoço', sex: '🍽️ Almoço' },
+                { horario: '13:00 - 13:50', seg: 'Geografia', ter: 'Artes', qua: 'Educação Física', qui: 'História', sex: 'Ciências' },
+                { horario: '13:50 - 14:40', seg: 'Educação Física', ter: 'Inglês', qua: 'Geografia', qui: 'Artes', sex: 'História' }
+            ],
+            '9A': [
+                { horario: '7:00 - 7:50', seg: 'Matemática', ter: 'Português', qua: 'Ciências', qui: 'História', sex: 'Geografia' },
+                { horario: '8:00 - 8:50', seg: 'Português', ter: 'Matemática', qua: 'História', qui: 'Ciências', sex: 'Artes' },
+                { horario: '9:20 - 10:10', seg: '🕘 Intervalo', ter: '🕘 Intervalo', qua: '🕘 Intervalo', qui: '🕘 Intervalo', sex: '🕘 Intervalo' },
+                { horario: '10:10 - 11:00', seg: 'Ciências', ter: 'História', qua: 'Matemática', qui: 'Português', sex: 'Inglês' },
+                { horario: '11:00 - 11:50', seg: 'Geografia', ter: 'Artes', qua: 'Ciências', qui: 'Matemática', sex: 'Educação Física' },
+                { horario: '11:50 - 13:00', seg: '🍽️ Almoço', ter: '🍽️ Almoço', qua: '🍽️ Almoço', qui: '🍽️ Almoço', sex: '🍽️ Almoço' },
+                { horario: '13:00 - 13:50', seg: 'Educação Física', ter: 'Geografia', qua: 'Artes', qui: 'História', sex: 'Português' },
+                { horario: '13:50 - 14:40', seg: 'Inglês', ter: 'Português', qua: 'Educação Física', qui: 'Geografia', sex: 'História' }
+            ],
+            '9B': [
+                { horario: '7:00 - 7:50', seg: 'História', ter: 'Matemática', qua: 'Português', qui: 'Ciências', sex: 'Geografia' },
+                { horario: '8:00 - 8:50', seg: 'Matemática', ter: 'História', qua: 'Ciências', qui: 'Português', sex: 'Artes' },
+                { horario: '9:20 - 10:10', seg: '🕘 Intervalo', ter: '🕘 Intervalo', qua: '🕘 Intervalo', qui: '🕘 Intervalo', sex: '🕘 Intervalo' },
+                { horario: '10:10 - 11:00', seg: 'Português', ter: 'Ciências', qua: 'Matemática', qui: 'História', sex: 'Inglês' },
+                { horario: '11:00 - 11:50', seg: 'Artes', ter: 'Geografia', qua: 'História', qui: 'Matemática', sex: 'Educação Física' },
+                { horario: '11:50 - 13:00', seg: '🍽️ Almoço', ter: '🍽️ Almoço', qua: '🍽️ Almoço', qui: '🍽️ Almoço', sex: '🍽️ Almoço' },
+                { horario: '13:00 - 13:50', seg: 'Geografia', ter: 'Artes', qua: 'Educação Física', qui: 'Português', sex: 'Ciências' },
+                { horario: '13:50 - 14:40', seg: 'Educação Física', ter: 'Inglês', qua: 'Geografia', qui: 'Artes', sex: 'Português' }
+            ]
+        };
+
+// Carregar dados do aluno
+        function carregarDadosAluno() {
+            const nome = localStorage.getItem('nomeAluno') || 'Aluno';
+            const turma = localStorage.getItem('turmaAluno') || '6A';
+            const email = localStorage.getItem('emailAluno') || '';
+            
+            dadosAluno = {
+                nome: nome,
+                turma: turma,
+                email: email
+            };
+            
+            document.getElementById('nomeAluno').textContent = nome;
+            document.getElementById('turmaAluno').innerHTML = '<i class="bi bi-people"></i> ' + turma.substring(0, 2) + 'º Ano ' + (turma.endsWith('A') ? 'A' : 'B');
+document.getElementById('turmaFiltro').value = turma;
+            document.getElementById('turmaHorario').value = turma;
+            document.getElementById('materiaFiltro').value = '';
+            
+            // Carregar materiais e horário
+            filtrarMateriais();
+            exibirHorario();
+        }
+
+        // Filtrar materiais - USA A TURMA DO ALUNO LOGADO
+        function filtrarMateriais() {
+            const materia = document.getElementById('materiaFiltro').value;
+            const turmaAluno = dadosAluno.turma;
+            const container = document.getElementById('listaMateriais');
+            
+            // Carregar materiais do localStorage (mesma chave usada pelo professor)
+            const todosMateriais = JSON.parse(localStorage.getItem('materiaisProfessor')) || [];
+            
+            // Turmas equivalentes para busca (6A = 6º Ano A)
+            const turmasBusca = mapeamentoTurmas[turmaAluno] || [turmaAluno];
+            
+            // Filtrar por matéria E pela turma do aluno
+            const materiaisFiltrados = todosMateriais.filter(m => {
+                const matchMateria = !materia || m.materia === materia;
+                // Verifica se a turma do material corresponde à turma do aluno
+                const matchTurma = turmasBusca.includes(m.turma) || turmasBusca.includes(m.turmaPadrao);
+                return matchMateria && matchTurma;
+            });
+            
+            if (materiaisFiltrados.length === 0) {
+                container.innerHTML = `
+                    <div class="col-12 text-center py-5">
+                        <i class="bi bi-inbox" style="font-size: 3rem; color: #adb5bd;"></i>
+                        <p class="mt-3 text-muted">${materia ? 'Nenhum material encontrado para ' + materia : 'Nenhum material disponível para sua turma (' + turmaAluno + ')'}</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            materiaisFiltrados.forEach((material) => {
+                html += `
+                    <div class="col-md-4 col-sm-6 mb-3">
+                        <div class="card material-card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="bi bi-book"></i> ${material.titulo}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">${material.materia} - ${material.turma}</h6>
+                                <p class="card-text">${material.descricao || 'Sem descrição'}</p>
+                                <small class="text-muted"><i class="bi bi-calendar"></i> ${material.data}</small>
+                            </div>
+                            <div class="card-footer bg-transparent">
+                                ${material.link ? `<a href="${material.link}" target="_blank" class="btn btn-primary btn-sm w-100"><i class="bi bi-link"></i> Acessar Material</a>` : '<span class="text-muted">Sem link disponível</span>'}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        // Exibir horário da turma
+        function exibirHorario() {
+            const turma = document.getElementById('turmaHorario').value;
+            const horarios = horariosTurmas[turma] || horariosTurmas['6A'];
+            const tbody = document.getElementById('tabelaHorarios');
+            
+            let html = '';
+            horarios.forEach(row => {
+                const estiloSeg = row.seg.includes('Intervalo') || row.seg.includes('Almoço') ? 'style="background-color: rgba(255,193,7,0.2);"' : 
+                                  row.seg.includes('Almoço') ? 'style="background-color: rgba(40,167,69,0.2);"' : '';
+                const estiloTer = row.ter.includes('Intervalo') || row.ter.includes('Almoço') ? 'style="background-color: rgba(255,193,7,0.2);"' : 
+                                  row.ter.includes('Almoço') ? 'style="background-color: rgba(40,167,69,0.2);"' : '';
+                const estiloQua = row.qua.includes('Intervalo') || row.qua.includes('Almoço') ? 'style="background-color: rgba(255,193,7,0.2);"' : 
+                                  row.qua.includes('Almoço') ? 'style="background-color: rgba(40,167,69,0.2);"' : '';
+                const estiloQui = row.qui.includes('Intervalo') || row.qui.includes('Almoço') ? 'style="background-color: rgba(255,193,7,0.2);"' : 
+                                  row.qui.includes('Almoço') ? 'style="background-color: rgba(40,167,69,0.2);"' : '';
+                const estiloSex = row.sex.includes('Intervalo') || row.sex.includes('Almoço') ? 'style="background-color: rgba(255,193,7,0.2);"' : 
+                                  row.sex.includes('Almoço') ? 'style="background-color: rgba(40,167,69,0.2);"' : '';
+                
+                html += `
+                    <tr>
+                        <td>${row.horario}</td>
+                        <td ${estiloSeg}>${row.seg}</td>
+                        <td ${estiloTer}>${row.ter}</td>
+                        <td ${estiloQua}>${row.qua}</td>
+                        <td ${estiloQui}>${row.qui}</td>
+                        <td ${estiloSex}>${row.sex}</td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
+
+// Exibir notas do ALUNO LOGADO
+        function exibirNotas() {
+            const materia = document.getElementById('materiaNotas').value;
+            const bimestre = document.getElementById('bimestreNotas').value;
+            const tbody = document.getElementById('tabelaNotas');
+            const turma = dadosAluno.turma;
+            
+            document.getElementById('tituloNotas').textContent = materia 
+                ? `${materia} - ${bimestre}º Bimestre` 
+                : 'Notas por Bimestre';
+            
+            if (!materia) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="text-center py-4">
+                            <i class="bi bi-info-circle" style="font-size: 2rem; color: #adb5bd;"></i>
+                            <p class="mt-2 text-muted">Selecione uma matéria para ver suas notas</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            // Carregar notas da turma (salvas pelo professor)
+            const notasTurma = JSON.parse(localStorage.getItem('notas_' + materia + '_' + turma + '_' + bimestre)) || {};
+            
+            // Encontrar o índice do aluno logado na turma
+            const nomeAlunoLogado = dadosAluno.nome.toLowerCase();
+            let indiceAluno = -1;
+            
+            // Tentar encontrar pelo nome na lista de alunos da turma
+            try {
+                const dadosTurma = JSON.parse(localStorage.getItem('nomes' + turma));
+                if (dadosTurma && dadosTurma.nomet) {
+                    for (let i = 0; i < dadosTurma.nomet.length; i++) {
+                        if (dadosTurma.nomet[i] && dadosTurma.nomet[i].toLowerCase().includes(nomeAlunoLogado)) {
+                            indiceAluno = i;
+                            break;
+                        }
+                    }
+                }
+            } catch (e) {
+                console.log('Erro ao buscar índice do aluno');
+            }
+            
+            // Se não encontrou pelo nome, tenta pelo email
+            if (indiceAluno === -1 && dadosAluno.email) {
+                const emailAlunoLogado = dadosAluno.email.toLowerCase();
+                try {
+                    const dadosTurma = JSON.parse(localStorage.getItem('emails' + turma));
+                    if (dadosTurma && dadosTurma.emailt) {
+                        for (let i = 0; i < dadosTurma.emailt.length; i++) {
+                            if (dadosTurma.emailt[i] && dadosTurma.emailt[i].toLowerCase().includes(emailAlunoLogado)) {
+                                indiceAluno = i;
+                                break;
+                            }
+                        }
+                    }
+                } catch (e) {
+                    console.log('Erro ao buscar índice do aluno por email');
+                }
+            }
+            
+            // Obter as notas do aluno (pelo índice)
+            const notasAluno = notasTurma[indiceAluno] || { nota1: '', nota2: '', nota3: '' };
+            const media = calcularMedia(notasAluno.nota1, notasAluno.nota2, notasAluno.nota3);
+            const situacao = getSituacao(media);
+            
+            // Mostrar apenas a linha do aluno logado
+            let html = '';
+            html += `
+                <tr class="${situacao.classe}">
+                    <td><i class="bi bi-person-badge"></i> ${dadosAluno.nome}</td>
+                    <td class="text-center">${notasAluno.nota1 || '-'}</td>
+                    <td class="text-center">${notasAluno.nota2 || '-'}</td>
+                    <td class="text-center">${notasAluno.nota3 || '-'}</td>
+                    <td class="text-center"><strong>${media > 0 ? media.toFixed(2).replace('.', ',') : '-'}</strong></td>
+                    <td class="text-center"><span class="badge ${situacao.badge}">${situacao.texto}</span></td>
+                </tr>
+            `;
+            
+            // Se não encontrou o aluno, mostrar aviso
+            if (indiceAluno === -1) {
+                html += `
+                    <tr>
+                        <td colspan="6" class="text-center py-3 bg-warning text-dark">
+                            <i class="bi bi-exclamation-triangle"></i> Aluno não encontrado na turma ${turma}. Verifique se seu nome está correto no cadastro.
+                        </td>
+                    </tr>
+                `;
+            }
+            
+            tbody.innerHTML = html;
+        }
+
+        // Calcular média
+        function calcularMedia(n1, n2, n3) {
+            const nota1 = parseFloat(n1) || 0;
+            const nota2 = parseFloat(n2) || 0;
+            const nota3 = parseFloat(n3) || 0;
+            if (n1 === '' && n2 === '' && n3 === '') return 0;
+            return (nota1 + nota2 + nota3) / 3;
+        }
+
+        // Obter situação
+        function getSituacao(media) {
+            if (media === 0) return { classe: '', badge: 'bg-secondary', texto: '-' };
+            if (media >= 7) return { classe: 'aprovado', badge: 'bg-success', texto: 'Aprovado' };
+            if (media >= 5) return { classe: 'recuperacao', badge: 'bg-warning text-dark', texto: 'Recuperação' };
+            return { classe: 'reprovado', badge: 'bg-danger', texto: 'Reprovado' };
+        }
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', function() {
+            carregarDadosAluno();
+        });
+    </script>
+</body>
+
+</html>

@@ -15,14 +15,26 @@ function highlightDay(day) {
 
 // ========== SISTEMA DE MATERIAIS ==========
 
+// Mapeamento de turmas para padronização
+const mapeamentoTurmas = {
+    '6º Ano A': '6A', '6º Ano B': '6B',
+    '7º Ano A': '7A', '7º Ano B': '7B',
+    '8º Ano A': '8A', '8º Ano B': '8B',
+    '9º Ano A': '9A', '9º Ano B': '9B'
+};
+
 // Salvar material no localStorage
 function salvarMaterial(event) {
     event.preventDefault();
     
+    const turmaSelecionada = document.getElementById('turma').value;
+    const turmaPadronizada = mapeamentoTurmas[turmaSelecionada] || turmaSelecionada;
+    
     const material = {
         id: Date.now(),
         materia: document.getElementById('materia').value,
-        turma: document.getElementById('turma').value,
+        turma: turmaSelecionada,       // Salva como está no select (para exibição)
+        turmaPadrao: turmaPadronizada, // Salva padronizado (6A, 6B, etc.) para busca
         titulo: document.getElementById('tituloMaterial').value,
         descricao: document.getElementById('descricaoMaterial').value,
         link: document.getElementById('linkMaterial').value,
@@ -30,10 +42,10 @@ function salvarMaterial(event) {
         dataCadastro: new Date().toLocaleDateString('pt-BR')
     };
     
-    // Salvar no localStorage
-    let materiais = JSON.parse(localStorage.getItem('materiais_professor')) || [];
+    // Salvar no localStorage (chave que o aluno também usa)
+    let materiais = JSON.parse(localStorage.getItem('materiaisProfessor')) || [];
     materiais.unshift(material);
-    localStorage.setItem('materiais_professor', JSON.stringify(materiais));
+    localStorage.setItem('materiaisProfessor', JSON.stringify(materiais));
     
     // Limpar formulário
     document.getElementById('materialForm').reset();
@@ -41,13 +53,13 @@ function salvarMaterial(event) {
     // Atualizar lista
     carregarMateriais();
     
-    alert('Material salvo com sucesso!');
+    alert('Material salvo com sucesso! Os alunos poderão visualizar em seus perfis.');
 }
 
 // Carregar materiais do localStorage
 function carregarMateriais() {
     const container = document.getElementById('listaMateriais');
-    let materiais = JSON.parse(localStorage.getItem('materiais_professor')) || [];
+    let materiais = JSON.parse(localStorage.getItem('materiaisProfessor')) || [];
     
     container.innerHTML = '';
     
@@ -67,8 +79,8 @@ function carregarMateriais() {
         card.innerHTML = `
             <div class="material-item">
                 <div class="d-flex justify-content-between align-items-start mb-2">
-                    <span class="badge badge-materia">${material.materia}</span>
-                    <span class="badge badge-turma">${material.turma}</span>
+                    <span class="badge bg-primary">${material.materia}</span>
+                    <span class="badge bg-secondary">${material.turma}</span>
                 </div>
                 <h5><i class="bi bi-file-earmark-text"></i> ${material.titulo}</h5>
                 <p>${material.descricao || 'Sem descrição'}</p>
@@ -89,9 +101,9 @@ function carregarMateriais() {
 // Excluir material
 function excluirMaterial(id) {
     if (confirm('Tem certeza que deseja excluir este material?')) {
-        let materiais = JSON.parse(localStorage.getItem('materiais_professor')) || [];
+        let materiais = JSON.parse(localStorage.getItem('materiaisProfessor')) || [];
         materiais = materiais.filter(m => m.id !== id);
-        localStorage.setItem('materiais_professor', JSON.stringify(materiais));
+        localStorage.setItem('materiaisProfessor', JSON.stringify(materiais));
         carregarMateriais();
         alert('Material excluído com sucesso!');
     }
