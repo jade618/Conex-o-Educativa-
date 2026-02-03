@@ -372,9 +372,48 @@
     </footer>
 
     <script>
+        // Nomes padrão para cada turma
+        const dadosTurmas = {
+            '6A': ["Lucas da Silva Santos", "Ana Carolina Oliveira Lima", "Gabriel Pereira Costa", "Isabela Santos Rodrigues", "Felipe Martins Almeida", "Mariana Oliveira Souza", "Rafael Silva Gomes", "Juliana Costa Pereira", "Leonardo Almeida Rodrigues", "Carolina Fernandes Silva", "Pedro Oliveira Santos", "Camila Lima Castro", "Matheus Santos Costa", "Larissa Almeida Rodrigues", "Thiago Martins Oliveira", "Marina Costa Lima", "João Silva Pereira", "Amanda Santos Almeida", "Bruno Oliveira Costa", "Fernanda Lima Santos", "Gustavo Costa Almeida", "Luiza Silva Rodrigues", "Daniel Martins Lima", "Renata Oliveira Costa", "Eduardo Santos Pereira"],
+            '6B': ["Lucas Ferreira Rocha", "Isabela Cardoso Gomes", "Gabriel Pereira Mendes", "Carolina Santos Barbosa", "Matheus Lima Fernandes", "Mariana Castro Neves", "Rafael Alves Ribeiro", "Juliana Costa Vieira", "Leonardo Oliveira Carvalho", "Larissa Nunes Pinto", "Pedro Silva Marques", "Camila Rodrigues Teixeira", "Thiago Santos Alencar", "Amanda Costa Viana", "João Martins Medeiros", "Fernanda Almeida Guerra", "Bruno Souza Freitas", "Marina Pereira Lima", "Gustavo Gomes Andrade", "Luiza Carvalho Monteiro", "Daniel Fernandes Campos", "Renata Oliveira Pires", "Eduardo Lima Castro", "Felipe Almeida Dias", "Ana Santos Nogueira"],
+            '7A': ["Gabriel Silva Oliveira", "Isabela Costa Santos", "Lucas Almeida Pereira", "Marina Rodrigues Lima", "Pedro Costa Carvalho", "Camila Ferreira Gomes", "Rafael Martins Souza", "Juliana Oliveira Almeida", "Leonardo Santos Lima", "Amanda Costa Barbosa", "Thiago Oliveira Silva", "Larissa Pereira Costa", "Felipe Santos Oliveira", "Bruna Lima Rodrigues", "Bruno Almeida Mendes", "Carla Costa Ferreira", "Daniel Oliveira Santos", "Eduardo Lima Almeida", "Fernanda Silva Costa", "Gustavo Pereira Oliveira", "Helena Rodrigues Lima", "Igor Santos Almeida", "Julia Lima Costa", "Kaique Oliveira Silva", "Leticia Pereira Santos"],
+            '7B': ["Matheus Costa Silva", "Ana Beatriz Oliveira", "Pedro Henrique Santos", "Mariana Lima Pereira", "Gabriel Martins Costa", "Camila Rodrigues Almeida", "Rafael Fernandes Lima", "Juliana Sousa Carvalho", "Leonardo Silva Rodrigues", "Amanda Costa Martins", "Thiago Oliveira Santos", "Larissa Almeida Ferreira", "Bruno Sousa Lima", "Fernanda Rodrigues Costa", "Gustavo Almeida Santos", "Luiza Martins Oliveira", "Daniel Pereira Lima", "Renata Costa Almeida", "Eduardo Rodrigues Santos", "Felipe Lima Costa", "Isabela Santos Oliveira", "Lucas Almeida Rodrigues", "Marina Costa Santos", "Pedro Martins Lima", "Camila Oliveira Costa"],
+            '8A': ["Victor Hugo Silva", "Luana Cristina Costa", "Kaique Ribeiro Oliveira", "Eduarda Santos Pereira", "Bruno Martins Almeida", "Gabriela Rodrigues Lima", "Guilherme Costa Santos", "Isadora Almeida Costa", "Lucas Ferreira Martins", "Júlia Oliveira Rodrigues", "Mateus Santos Lima", "Manuela Costa Almeida", "Pedro Henrique Silva", "Carla Cristina Oliveira", "Rafael Martins Costa", "Amanda Beatriz Santos", "Gustavo Rodrigues Lima", "Larissa Maria Costa", "Daniel Silva Martins", "Beatriz Almeida Santos", "Thiago Oliveira Costa", "Sofia Rodrigues Lima", "Fábio Santos Almeida", "Marina Costa Oliveira", "Enzo Gabriel Silva"],
+            '8B': ["Pedro Lucas Oliveira", "Maria Clara Costa", "Gabriel Afonso Santos", "Ana Júlia Pereira", "Lucas Miguel Almeida", "Sofia Victoria Lima", "Arthur Henrique Costa", "Marina Beatriz Rodrigues", "Bernardo Silva Martins", "Helena Nova Costa", "Davi Lucas Sousa", "Luiza Maria Almeida", "Paulo Eduardo Santos", "Camila Isabella Lima", "Lucas Gabriel Oliveira", "Evelyn Maria Costa", "Eduardo Henrique Silva", "Nicole Alexandra Rodrigues", "Kaique Eduardo Martins", "Isabelly Caroline Costa", "Rafael Lucas Sousa", "Letícia Maria Almeida", "Kaique Miguel Santos", "Ana Beatriz Oliveira", "Bruno Alexander Costa"],
+            '9A': ["Thiago André Silva", "Jéssica Cristina Costa", "Kaique Gabriel Oliveira", "Mayara Rodrigues Santos", "Fabrício Almeida Lima", "Natália Costa Pereira", "Bruno Lucas Martins", "Larissa Fernanda Almeida", "Renan Rodrigues Costa", "Milena Silva Oliveira", "Lucas Gabriel Santos", "Cíntia Cristina Lima", "Gustavo Henrique Almeida", "Aline Maria Costa", "Matheus Felipe Oliveira", "Bruna Sousa Santos", "Paulo Vitor Lima", "Caroline Costa Almeida", "Kaique Eduardo Oliveira", "Amanda Beatriz Silva", "Kaique Vinicius Costa", "Jaqueline Regina Santos", "Leonardo Miguel Almeida", "Isabela Helena Costa", "Marcos Paulo Oliveira"],
+            '9B': ["Rafael Wellington Silva", "Carla Eunice Costa", "Kaique Robson Oliveira", "Letícia Regina Santos", "César Augusto Lima", "Mirela Cristina Pereira", "Kaique Douglas Almeida", "Nayara Helena Costa", "Elias Gabriel Rodrigues", "Rafaela Caroline Santos", "Murilo Henrique Oliveira", "Stella Marisa Lima", "Victor Hugo Costa", "Alessandra Beatriz Almeida", "Douglas Rafael Oliveira", "Vanessa Cristina Santos", "Igor Gabriel Lima", "Patricia Helena Costa", "Kaique Gabriel Oliveira", "Ariana Carla Pereira", "Leonardo Marcos Silva", "Juliana Marcia Costa", "Kaique Samuel Almeida", "Carla Regina Santos", "Marcos Vinicius Lima"]
+        };
+
+        // Inicializar dados da turma se não existirem
+        function inicializarTurma(turma) {
+            const chave = 'nomes' + turma;
+            const existente = localStorage.getItem(chave);
+            
+            if (!existente) {
+                const nomes = dadosTurmas[turma] || [];
+                const dados = {
+                    nomet: nomes,
+                    nota1t: [],
+                    nota2t: [],
+                    nota3t: []
+                };
+                localStorage.setItem(chave, JSON.stringify(dados));
+                console.log('Turma ' + turma + ' inicializada com ' + nomes.length + ' alunos');
+            }
+        }
+
+        // Inicializar todas as turmas
+        function inicializarTodasTurmas() {
+            const turmas = ['6A', '6B', '7A', '7B', '8A', '8B', '9A', '9B'];
+            turmas.forEach(turma => inicializarTurma(turma));
+        }
+
         // Carregar alunos de uma turma
         function carregarAlunos(turma) {
-            const dados = JSON.parse(localStorage.getItem(`nomes${turma}`));
+            // Garantir que a turma está inicializada
+            inicializarTurma(turma);
+            
+            const dados = JSON.parse(localStorage.getItem('nomes' + turma));
             return dados ? dados.nomet : [];
         }
 
