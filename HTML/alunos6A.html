@@ -211,6 +211,13 @@
             return senha;
         }
 
+        // Função global para atualizar a tabela após cadastro
+        window.atualizarTabelaAlunos = function() {
+            if (typeof atualizarTabela === 'function') {
+                atualizarTabela();
+            }
+        };
+
         // Cadastrar novo aluno
         function cadastrarAluno(event) {
             event.preventDefault();
@@ -251,6 +258,23 @@
             alunos.push(novoAluno);
             localStorage.setItem('alunosCadastrados', JSON.stringify(alunos));
             
+            // Adicionar à lista de nomes da turma
+            const dadosTurma = JSON.parse(localStorage.getItem('nomes' + turma)) || { nomet: [], nota1t: [], nota2t: [], nota3t: [] };
+            dadosTurma.nomet.push(nome);
+            localStorage.setItem('nomes' + turma, JSON.stringify(dadosTurma));
+            
+            // Registrar no dashboard
+            const turmaFormatada = turma.replace(/(\d)([AB])/, '$1º Ano - $2');
+            registrarNoDashboard('adicionado', nome, turmaFormatada, 'Novo aluno matriculado');
+            
+            // Atualizar contador de alunos
+            atualizarContadorAlunos();
+            
+            // Atualizar a tabela na página atual
+            if (typeof atualizarTabela === 'function') {
+                atualizarTabela();
+            }
+            
             // Mostrar modal com informações do email enviado
             document.getElementById('emailEnviado').textContent = email;
             document.getElementById('nomeEnviado').textContent = nome;
@@ -260,7 +284,9 @@
             
             // Fechar modal de cadastro e abrir modal de confirmação
             const modalCadastro = bootstrap.Modal.getInstance(document.getElementById('cadastrarAlunoModal'));
-            modalCadastro.hide();
+            if (modalCadastro) {
+                modalCadastro.hide();
+            }
             
             const modalConfirmacao = new bootstrap.Modal(document.getElementById('emailEnviadoModal'));
             modalConfirmacao.show();
