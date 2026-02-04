@@ -210,12 +210,31 @@
             return senha;
         }
 
-        // Função global para atualizar a tabela após cadastro
+// Função global para atualizar a tabela após cadastro
         window.atualizarTabelaAlunos = function() {
             if (typeof atualizarTabela === 'function') {
                 atualizarTabela();
             }
         };
+
+        // ========== SINCRONIZAÇÃO COM LOGIN ==========
+        function sincronizarAlunoComLogin(nome, email, senha, turma) {
+            const alunos = JSON.parse(localStorage.getItem('alunosCadastrados')) || [];
+            const existente = alunos.find(a => 
+                a.email.toLowerCase() === email.toLowerCase() || 
+                (a.nome.toLowerCase() === nome.toLowerCase() && a.turma === turma)
+            );
+            if (!existente) {
+                alunos.push({
+                    nome: nome,
+                    email: email,
+                    senha: senha,
+                    turma: turma,
+                    dataCadastro: new Date().toISOString()
+                });
+                localStorage.setItem('alunosCadastrados', JSON.stringify(alunos));
+            }
+        }
 
         function cadastrarAluno(event) {
             event.preventDefault();

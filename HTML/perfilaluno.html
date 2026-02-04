@@ -426,7 +426,59 @@ document.getElementById('turmaFiltro').value = turma;
             tbody.innerHTML = html;
         }
 
-// Exibir notas do ALUNO LOGADO
+// Função para normalizar nomes (remover acentos, converter para minúsculas)
+        function normalizarNome(nome) {
+            return nome.toLowerCase()
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .replace(/\s+/g, ' ')
+                .trim();
+        }
+
+        // Função para encontrar o índice do aluno na turma
+        function encontrarIndiceAluno(nomeAluno, turma) {
+            try {
+                const dadosTurma = JSON.parse(localStorage.getItem('nomes' + turma));
+                if (dadosTurma && dadosTurma.nomet) {
+                    const nomeNormalizado = normalizarNome(nomeAluno);
+                    
+                    // Estratégia 1: correspondência exata após normalização
+                    for (let i = 0; i < dadosTurma.nomet.length; i++) {
+                        if (normalizarNome(dadosTurma.nomet[i]) === nomeNormalizado) {
+                            return i;
+                        }
+                    }
+                    
+                    // Estratégia 2: verificar se o nome do aluno está contido na lista
+                    for (let i = 0; i < dadosTurma.nomet.length; i++) {
+                        if (normalizarNome(dadosTurma.nomet[i]).includes(nomeNormalizado) || 
+                            nomeNormalizado.includes(normalizarNome(dadosTurma.nomet[i]))) {
+                            return i;
+                        }
+                    }
+                    
+                    // Estratégia 3: verificar primeiras palavras do nome
+                    const partesNome = nomeNormalizado.split(' ');
+                    if (partesNome.length >= 2) {
+                        for (let i = 0; i < dadosTurma.nomet.length; i++) {
+                            const nomeLista = normalizarNome(dadosTurma.nomet[i]);
+                            const primeiraPalavra = partesNome[0];
+                            const ultimaPalavra = partesNome[partesNome.length - 1];
+                            
+                            // Verificar se primeiras E últimas palavras coincidem
+                            if ((nomeLista.includes(primeiraPalavra) && nomeLista.includes(ultimaPalavra))) {
+                                return i;
+                            }
+                        }
+                    }
+                }
+            } catch (e) {
+                console.log('Erro ao buscar índice do aluno:', e);
+            }
+            return -1;
+        }
+
+        // Exibir notas do ALUNO LOGADO
         function exibirNotas() {
             const materia = document.getElementById('materiaNotas').value;
             const bimestre = document.getElementById('bimestreNotas').value;
@@ -453,41 +505,7 @@ document.getElementById('turmaFiltro').value = turma;
             const notasTurma = JSON.parse(localStorage.getItem('notas_' + materia + '_' + turma + '_' + bimestre)) || {};
             
             // Encontrar o índice do aluno logado na turma
-            const nomeAlunoLogado = dadosAluno.nome.toLowerCase();
-            let indiceAluno = -1;
-            
-            // Tentar encontrar pelo nome na lista de alunos da turma
-            try {
-                const dadosTurma = JSON.parse(localStorage.getItem('nomes' + turma));
-                if (dadosTurma && dadosTurma.nomet) {
-                    for (let i = 0; i < dadosTurma.nomet.length; i++) {
-                        if (dadosTurma.nomet[i] && dadosTurma.nomet[i].toLowerCase().includes(nomeAlunoLogado)) {
-                            indiceAluno = i;
-                            break;
-                        }
-                    }
-                }
-            } catch (e) {
-                console.log('Erro ao buscar índice do aluno');
-            }
-            
-            // Se não encontrou pelo nome, tenta pelo email
-            if (indiceAluno === -1 && dadosAluno.email) {
-                const emailAlunoLogado = dadosAluno.email.toLowerCase();
-                try {
-                    const dadosTurma = JSON.parse(localStorage.getItem('emails' + turma));
-                    if (dadosTurma && dadosTurma.emailt) {
-                        for (let i = 0; i < dadosTurma.emailt.length; i++) {
-                            if (dadosTurma.emailt[i] && dadosTurma.emailt[i].toLowerCase().includes(emailAlunoLogado)) {
-                                indiceAluno = i;
-                                break;
-                            }
-                        }
-                    }
-                } catch (e) {
-                    console.log('Erro ao buscar índice do aluno por email');
-                }
-            }
+            let indiceAluno = encontrarIndiceAluno(dadosAluno.nome, turma);
             
             // Obter as notas do aluno (pelo índice)
             const notasAluno = notasTurma[indiceAluno] || { nota1: '', nota2: '', nota3: '' };

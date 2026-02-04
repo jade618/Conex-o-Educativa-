@@ -218,6 +218,30 @@
             }
         };
 
+// ========== SINCRONIZAÇÃO COM LOGIN ==========
+        // Garante que o aluno seja sincronizado com a lista de login
+        function sincronizarAlunoComLogin(nome, email, senha, turma) {
+            const alunos = JSON.parse(localStorage.getItem('alunosCadastrados')) || [];
+            
+            // Verificar se já existe
+            const existente = alunos.find(a => 
+                a.email.toLowerCase() === email.toLowerCase() || 
+                (a.nome.toLowerCase() === nome.toLowerCase() && a.turma === turma)
+            );
+            
+            if (!existente) {
+                alunos.push({
+                    nome: nome,
+                    email: email,
+                    senha: senha,
+                    turma: turma,
+                    dataCadastro: new Date().toISOString()
+                });
+                localStorage.setItem('alunosCadastrados', JSON.stringify(alunos));
+                console.log('Aluno sincronizado com login:', nome);
+            }
+        }
+
         // Cadastrar novo aluno
         function cadastrarAluno(event) {
             event.preventDefault();
@@ -254,11 +278,11 @@
                 dataCadastro: new Date().toISOString()
             };
             
-            // Salvar no localStorage
+            // Salvar no localStorage (lista de login)
             alunos.push(novoAluno);
             localStorage.setItem('alunosCadastrados', JSON.stringify(alunos));
             
-            // Adicionar à lista de nomes da turma
+            // Adicionar à lista de nomes da turma (para notas/chamada)
             const dadosTurma = JSON.parse(localStorage.getItem('nomes' + turma)) || { nomet: [], nota1t: [], nota2t: [], nota3t: [] };
             dadosTurma.nomet.push(nome);
             localStorage.setItem('nomes' + turma, JSON.stringify(dadosTurma));
