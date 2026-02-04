@@ -435,7 +435,7 @@ document.getElementById('turmaFiltro').value = turma;
                 .trim();
         }
 
-        // Função para encontrar o índice do aluno na turma
+        // Função para encontrar o índice exato do aluno na turma
         function encontrarIndiceAluno(nomeAluno, turma) {
             try {
                 const dadosTurma = JSON.parse(localStorage.getItem('nomes' + turma));
@@ -501,11 +501,38 @@ document.getElementById('turmaFiltro').value = turma;
                 return;
             }
             
-            // Carregar notas da turma (salvas pelo professor)
-            const notasTurma = JSON.parse(localStorage.getItem('notas_' + materia + '_' + turma + '_' + bimestre)) || {};
-            
             // Encontrar o índice do aluno logado na turma
             let indiceAluno = encontrarIndiceAluno(dadosAluno.nome, turma);
+            
+            console.log('Buscando notas para:', {
+                nome: dadosAluno.nome,
+                turma: turma,
+                materia: materia,
+                bimestre: bimestre,
+                indiceEncontrado: indiceAluno
+            });
+            
+            // Tentar carregar as notas com diferentes formatos de chave
+            let notasTurma = null;
+            const chavesPossiveis = [
+                'notas_' + materia + '_' + turma + '_' + bimestre,  // formato: notas_Matemática_6A_1
+                'notas_' + materia + '_' + turma.substring(0, 2) + 'º Ano ' + turma.substring(2) + '_' + bimestre,
+                'notas_' + materia + '_' + turma + '_b' + bimestre
+            ];
+            
+            for (const chave of chavesPossiveis) {
+                notasTurma = JSON.parse(localStorage.getItem(chave));
+                if (notasTurma && Object.keys(notasTurma).length > 0) {
+                    console.log('Notas encontradas com chave:', chave);
+                    break;
+                }
+                notasTurma = null;
+            }
+            
+            // Se não encontrou com chaves alternativas, usar a chave padrão
+            if (!notasTurma) {
+                notasTurma = JSON.parse(localStorage.getItem('notas_' + materia + '_' + turma + '_' + bimestre)) || {};
+            }
             
             // Obter as notas do aluno (pelo índice)
             const notasAluno = notasTurma[indiceAluno] || { nota1: '', nota2: '', nota3: '' };
@@ -525,12 +552,17 @@ document.getElementById('turmaFiltro').value = turma;
                 </tr>
             `;
             
-            // Se não encontrou o aluno, mostrar aviso
+            // Se não encontrou o aluno, mostrar aviso com informações de debug
             if (indiceAluno === -1) {
+                const dadosTurma = JSON.parse(localStorage.getItem('nomes' + turma));
+                const totalAlunos = dadosTurma && dadosTurma.nomet ? dadosTurma.nomet.length : 0;
+                
                 html += `
                     <tr>
                         <td colspan="6" class="text-center py-3 bg-warning text-dark">
-                            <i class="bi bi-exclamation-triangle"></i> Aluno não encontrado na turma ${turma}. Verifique se seu nome está correto no cadastro.
+                            <i class="bi bi-exclamation-triangle"></i> Aluno "${dadosAluno.nome}" não encontrado na turma ${turma}. 
+                            <br><small>Total de alunos na turma: ${totalAlunos}</small>
+                            <br><small>Verifique se o nome está exatamente igual ao cadastro.</small>
                         </td>
                     </tr>
                 `;
